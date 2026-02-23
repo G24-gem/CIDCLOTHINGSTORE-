@@ -1,0 +1,308 @@
+/* ===== ROOT ===== */
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D5A3;
+  --cream: #F5ECD7;
+  --deep-black: #080808;
+  --soft-black: #111111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--deep-black);
+  color: var(--cream);
+  cursor: none;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+
+.cursor-follower {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+}
+
+.cursor.expanded {
+  width: 16px;
+  height: 16px;
+  background: var(--gold-light);
+}
+
+.cursor-follower.expanded {
+  width: 52px;
+  height: 52px;
+}
+
+@media (max-width: 768px) {
+  .cursor, .cursor-follower { display: none; }
+  body { cursor: auto; }
+}
+
+/* ===== NAVBAR ===== */
+#navbar {
+  background: transparent;
+}
+
+#navbar.scrolled {
+  background: rgba(8, 8, 8, 0.92);
+  backdrop-filter: blur(20px);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+/* ===== MOBILE MENU ===== */
+#mobile-menu.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ===== HERO BACKGROUND ===== */
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(107, 30, 46, 0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(201, 168, 76, 0.1) 0%, transparent 50%),
+    linear-gradient(135deg, #0a0a0a 0%, #111111 50%, #0a0806 100%);
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes pulse-pin {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.5; }
+}
+
+@keyframes scroll-line {
+  0% { transform: scaleY(0); transform-origin: top; }
+  50% { transform: scaleY(1); transform-origin: top; }
+  51% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+.fade-up {
+  animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ===== MARQUEE ===== */
+.marquee-track {
+  animation: marquee 20s linear infinite;
+  width: max-content;
+}
+
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== BUTTONS ===== */
+.btn-gold {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--deep-black);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 1rem 2.5rem;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-gold::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: rgba(255,255,255,0.15);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+}
+
+.btn-gold:hover::after {
+  left: 120%;
+}
+
+.btn-gold:hover {
+  background: #d4b05a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(201, 168, 76, 0.2);
+}
+
+.btn-outline {
+  display: inline-block;
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  color: var(--cream);
+  font-size: 0.7rem;
+  padding: 1rem 2.5rem;
+  text-decoration: none;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* ===== COLLECTION CARDS ===== */
+.collection-card {
+  transition: transform 0.4s ease;
+}
+
+.collection-card:hover {
+  transform: translateY(-8px);
+}
+
+/* ===== ABOUT IMAGE ===== */
+.about-img {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.about-img-wrapper:hover .about-img {
+  transform: scale(1.05);
+}
+
+/* ===== MAP STYLES ===== */
+.map-street-h {
+  position: absolute;
+  left: 0; right: 0;
+  height: 1px;
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.map-street-v {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(201, 168, 76, 0.08);
+}
+
+.pin-outer {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(201, 168, 76, 0.2);
+  margin: 0 auto;
+  animation: pulse-pin 2s ease-in-out infinite;
+}
+
+.pin-inner {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  margin: -18px auto 0;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== WHY CARD ICON ===== */
+.why-icon {
+  color: var(--gold);
+  line-height: 1;
+}
+
+/* ===== SCROLL LINE ANIMATION ===== */
+.scroll-line {
+  animation: scroll-line 2s ease-in-out infinite;
+}
+
+/* ===== INSTAGRAM CARDS ===== */
+.insta-card {
+  transition: transform 0.4s ease;
+}
+
+.insta-card:hover {
+  transform: scale(0.98);
+}
+
+/* ===== SOCIAL BUTTONS ===== */
+.social-btn {
+  text-decoration: none;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--gold);
+  color: var(--deep-black);
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--deep-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-light);
+}
